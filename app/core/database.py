@@ -9,7 +9,7 @@ engine = create_async_engine(MYSQL_DB_CONNECT, echo=True)
 print(engine)
 
 async_session = async_session = async_sessionmaker(
-    engine, class_=AsyncSession, expire_on_commit=False
+    engine, expire_on_commit=False, class_=AsyncSession
 )
 
 
