@@ -1,10 +1,11 @@
 from io import BytesIO
-from typing import List
+from typing import Annotated, List
 from fastapi import APIRouter, Depends, File, UploadFile
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.database import get_db
 from app.libs.auth.dependencies import require_role
 from app.repositories.excel import handleExcel
+from typing import Optional
 
 router = APIRouter(prefix="/excel", tags=["Excel"])
 
@@ -15,4 +16,4 @@ async def upload_file(
     db: AsyncSession = Depends(get_db),
     current_user=require_role(["admin"]),
 ):
-    return handleExcel(files)
+    return await handleExcel(files)
