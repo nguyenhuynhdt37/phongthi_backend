@@ -24,7 +24,6 @@ import pandas as pd
 from typing import List
 from io import BytesIO
 from fastapi import UploadFile
-from typing import Optional
 
 
 async def handleExcel(files: List[UploadFile]):
@@ -53,7 +52,8 @@ async def handleExcel(files: List[UploadFile]):
         # Xác định dòng tiêu đề
         index_Column = find_header_row(df)
         if index_Column is None:
-            raise ValueError("Header row not found.")
+            total_files_valid += 1
+            continue
 
         ma_mon = extract_course_code(df.iloc[index_Column - 1].values[0])
         if ma_mon is None:
@@ -87,7 +87,17 @@ async def handleExcel(files: List[UploadFile]):
                 .astype(str)
                 .str.strip()
                 .str.lower()
-                .replace({"vắng": -1, "phép": -0.5, "v": -1, "p": -0.5, "nan": 0})
+                .replace(
+                    {
+                        "vắng": -1,
+                        "phép": -0.5,
+                        "v": -1,
+                        "p": -0.5,
+                        "nan": 0,
+                        "chậm": 0.5,
+                        "c": -0.5,
+                    }
+                )
             )
 
         df_attendance[attendance_cols] = (
@@ -135,10 +145,23 @@ async def handleExcel(files: List[UploadFile]):
         raise CustomException(404, "Không có dữ liệu nào hợp lệ trong file.")
     return format_response(
         status_code=200,
-        data={
-            "data": data,
-            "total_files": total_files,
-            "total_files_valid": total_files_valid,
-        },
+        data=dict(
+            students=[
+                {
+                    "course_code": key,
+                    "count_student": len(data[key]),
+                    "count_student_band": sum(
+                        1 for student in data[key] if student["eligible_for_exam"] == 0
+                    ),
+                    "count_student_eligible": sum(
+                        1 for student in data[key] if student["eligible_for_exam"] == 1
+                    ),
+                    "students": data[key],
+                }
+                for key in data
+            ],
+            total_files=total_files,
+            total_files_valid=total_files_valid,
+        ),
         message="Thành công",
     )
