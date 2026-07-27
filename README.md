@@ -1,18 +1,17 @@
-# ⚙️ Smart Exam Room Backend API (FastAPI & MySQL)
+# ⚙️ Smart Exam Room Backend REST API (FastAPI & MySQL)
 
-![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-009688?style=for-the-badge&logo=fastapi&logoColor=white)
-![Python](https://img.shields.io/badge/Python-3.11-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![Python 3.11](https://img.shields.io/badge/Python-3.11-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com/)
 
-Backend xử lý logic nghiệp vụ cho hệ thống **Phòng Thi Thông Minh**. Cung cấp RESTful API quản lý danh sách thí sinh, điểm danh, sắp xếp sơ đồ chỗ ngồi và bảo mật JWT.
+Máy chủ Backend dịch vụ cho hệ thống **Phòng Thi Thông Minh**. Xử lý danh sách thí sinh, sơ đồ chỗ ngồi tự động, điểm danh thi và bảo mật JWT.
 
 ---
 
-## ✨ Tính Năng Nổi Bật
+## ✨ Tính Năng
 
-- 🔑 Auth JWT, phân quyền Cán bộ coi thi & Admin.
-- 💺 Thuật toán xếp sơ đồ chỗ ngồi phòng thi tự động.
-- 📑 Export danh sách báo cáo phòng thi.
+- 💺 **Thuật toán sắp xếp sơ đồ phòng thi:** Tự động chia chỗ ngồi cho thí sinh tránh trùng lặp môn thi/mã đề.
+- 🔑 **Auth & Phân quyền:** Xác thực Cán bộ coi thi & Admin quản lý.
 
 ```bash
 git clone https://github.com/nguyenhuynhdt37/phongthi-backend-python.git
